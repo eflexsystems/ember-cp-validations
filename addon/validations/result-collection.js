@@ -1,5 +1,5 @@
 import { isNone, isPresent } from '@ember/utils';
-import { A as emberArray, isArray } from '@ember/array';
+import { isArray } from '@ember/array';
 import { tracked } from '@glimmer/tracking';
 
 /**
@@ -24,7 +24,7 @@ export default class ValidationsResultCollection {
   constructor(props = {}) {
     Object.assign(this, {
       attribute: props.attribute,
-      content: emberArray(props.content ?? []).compact(),
+      content: props.content ?? [].filter((item) => item),
     });
   }
 
@@ -57,7 +57,7 @@ export default class ValidationsResultCollection {
    * @type {Boolean}
    */
   get isValid() {
-    return this.content.isEvery('isValid', true);
+    return this.content.every((item) => item.isValid);
   }
 
   /**
@@ -74,7 +74,12 @@ export default class ValidationsResultCollection {
    * @type {Array}
    */
   get messages() {
-    return this.content.mapBy('messages').flat(Infinity).compact().uniq();
+    const messages = this.content
+      .map((item) => item.messages)
+      .flat(Infinity)
+      .filter((item) => item);
+
+    return [...new Set(messages)];
   }
 
   /**
@@ -91,7 +96,7 @@ export default class ValidationsResultCollection {
    * @type {String}
    */
   get message() {
-    return this.messages.firstObject;
+    return this.messages[0];
   }
 
   /**
@@ -125,11 +130,12 @@ export default class ValidationsResultCollection {
    * @type {Array}
    */
   get warningMessages() {
-    return this.content
-      .mapBy('warningMessages')
+    const messages = this.content
+      .map((item) => item.warningMessages)
       .flat(Infinity)
-      .compact()
-      .uniq();
+      .filter((item) => item);
+
+    return [...new Set(messages)];
   }
 
   /**
@@ -146,7 +152,7 @@ export default class ValidationsResultCollection {
    * @type {String}
    */
   get warningMessage() {
-    return this.warningMessages.firstObject;
+    return this.warningMessages[0];
   }
 
   /**
@@ -164,7 +170,9 @@ export default class ValidationsResultCollection {
    * @type {Array}
    */
   get warnings() {
-    return this._computeErrorCollection(this.content.mapBy('warnings'));
+    return this._computeErrorCollection(
+      this.content.map((item) => item.warnings)
+    );
   }
 
   /**
@@ -181,7 +189,7 @@ export default class ValidationsResultCollection {
    * @type {Error}
    */
   get warning() {
-    return this.warnings.firstObject;
+    return this.warnings[0];
   }
 
   /**
@@ -199,7 +207,9 @@ export default class ValidationsResultCollection {
    * @type {Array}
    */
   get errors() {
-    return this._computeErrorCollection(this.content.mapBy('errors'));
+    return this._computeErrorCollection(
+      this.content.map((item) => item.errors)
+    );
   }
 
   /**
@@ -216,7 +226,7 @@ export default class ValidationsResultCollection {
    * @type {Error}
    */
   get error() {
-    return this.errors.firstObject;
+    return this.errors[0];
   }
 
   /**
@@ -275,7 +285,9 @@ export default class ValidationsResultCollection {
 
   _computeErrorCollection(collection = []) {
     let attribute = this.attribute;
-    let errors = collection.flat(Infinity).compact().uniq();
+    let errors = collection.flat(Infinity).filter((error) => error);
+
+    errors = [...new Set(errors)];
 
     errors.forEach((e) => {
       if (attribute && e.attribute !== attribute) {

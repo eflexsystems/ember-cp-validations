@@ -159,12 +159,16 @@ module('Integration | Validations | Factory - General', function (hooks) {
     const { validations, model } = object.validations.validate();
     assert.deepEqual(model, object, 'expected model to be the correct model');
     assert.deepEqual(
-      validations.content.mapBy('attribute').sort(),
+      validations.content.map((item) => item.attribute).sort(),
       ['firstName', 'lastName'].sort()
     );
 
-    let firstName = validations.content.findBy('attribute', 'firstName');
-    let lastName = validations.content.findBy('attribute', 'lastName');
+    let firstName = validations.content.find(
+      (item) => item.attribute === 'firstName'
+    );
+    let lastName = validations.content.find(
+      (item) => item.attribute === 'lastName'
+    );
 
     assert.true(firstName.isValid);
     assert.deepEqual(firstName.message, undefined);
@@ -199,12 +203,16 @@ module('Integration | Validations | Factory - General', function (hooks) {
 
     assert.deepEqual(model, object, 'expected model to be the correct model');
     assert.deepEqual(
-      validations.content.mapBy('attribute').sort(),
+      validations.content.map((item) => item.attribute).sort(),
       ['firstName', 'lastName'].sort()
     );
 
-    let firstName = validations.content.findBy('attribute', 'firstName');
-    let lastName = validations.content.findBy('attribute', 'lastName');
+    let firstName = validations.content.find(
+      (item) => item.attribute === 'firstName'
+    );
+    let lastName = validations.content.find(
+      (item) => item.attribute === 'lastName'
+    );
 
     assert.true(firstName.isValid);
     assert.deepEqual(firstName.message, undefined);
@@ -263,7 +271,7 @@ module('Integration | Validations | Factory - General', function (hooks) {
     });
 
     let rules = A(object.validations._validationRules.firstName);
-    assert.false(rules.isAny('defaultOptions', undefined));
+    assert.false(rules.some((rule) => rule.defaultOptions === undefined));
     assert.deepEqual(rules[0].defaultOptions.description, 'Test field');
   });
 
@@ -289,7 +297,7 @@ module('Integration | Validations | Factory - General', function (hooks) {
 
     // Global options present in rules
     let rules = A(object.validations._validationRules.firstName);
-    assert.false(rules.isAny('globalOptions', undefined));
+    assert.false(rules.some((rule) => rule.globalOptions === undefined));
     assert.deepEqual(rules[0].globalOptions.max, 10);
 
     assert.ok(object.validations.attrs.firstName.isInvalid);
@@ -903,7 +911,8 @@ module('Integration | Validations | Factory - General', function (hooks) {
       'number of errors was expected to be 2'
     );
     assert.deepEqual(
-      obj.validations.errors.filterBy('type', 'presence').length,
+      obj.validations.errors.filter((error) => error.type === 'presence')
+        .length,
       1,
       'number of errors was expected to be 1'
     );
@@ -945,7 +954,7 @@ module('Integration | Validations | Factory - General', function (hooks) {
     }
     /* eslint-disable no-console */
     console.time('init');
-    items.mapBy('validations.isValid');
+    items.map((item) => item.validations.isValid);
     console.timeEnd('init');
 
     items.forEach((item, i) => {
@@ -959,7 +968,7 @@ module('Integration | Validations | Factory - General', function (hooks) {
     });
 
     console.time('after set');
-    A(items).mapBy('validations.isValid');
+    items.map((item) => item.validations.isValid);
     console.timeEnd('after set');
     /* eslint-enable no-console */
 

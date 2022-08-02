@@ -15,10 +15,7 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
   },
   order: {
     description: 'Order',
-    validators: [
-      validator('belongs-to'),
-      validator('presence', true),
-    ],
+    validators: [validator('belongs-to'), validator('presence', true)],
   },
   line: {
     description: 'Order Line',

@@ -15,10 +15,7 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
   },
   selections: {
     description: 'Order Selections',
-    validators: [
-      validator('has-many'),
-      validator('presence', true),
-    ],
+    validators: [validator('has-many'), validator('presence', true)],
   },
 })
 export default class OrderLine extends Model {
