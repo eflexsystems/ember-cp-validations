@@ -1,6 +1,5 @@
 import { isArray } from '@ember/array';
 import { isNone } from '@ember/utils';
-import { run } from '@ember/runloop';
 import DefaultMessages from 'dummy/validators/messages';
 import PresenceValidator from 'dummy/validators/presence';
 import LengthValidator from 'dummy/validators/length';
@@ -480,7 +479,7 @@ module('Integration | Validations | Factory - General', function (hooks) {
     let options = object.validations.attrs.firstName.options;
     assert.deepEqual(options.length.max, 5);
 
-    run(() => (object.max = 3));
+    object.max = 3;
 
     options = object.validations.attrs.firstName.options;
     assert.deepEqual(options.length.max, 3);
