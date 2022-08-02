@@ -1,4 +1,3 @@
-import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
@@ -6,18 +5,14 @@ module('Unit | Validations | DS.Model', function (hooks) {
   setupTest(hooks);
 
   test('create model with defaults', function (assert) {
-    let object = run(() =>
-      this.owner.lookup('service:store').createRecord('signup')
-    );
+    const object = this.owner.lookup('service:store').createRecord('signup');
 
     assert.false(
       object.validations.attrs.acceptTerms.isValid,
       'isValid was expected to be FALSE'
     );
 
-    run(() => {
-      object.set('acceptTerms', true);
-    });
+    object.acceptTerms = true;
 
     assert.true(
       object.validations.attrs.acceptTerms.isValid,
@@ -26,20 +21,16 @@ module('Unit | Validations | DS.Model', function (hooks) {
   });
 
   test('create model overriding defaults', function (assert) {
-    let object = run(() =>
-      this.owner
-        .lookup('service:store')
-        .createRecord('signup', { acceptTerms: true })
-    );
+    const object = this.owner
+      .lookup('service:store')
+      .createRecord('signup', { acceptTerms: true });
 
     assert.true(
       object.validations.attrs.acceptTerms.isValid,
       'isValid was expected to be TRUE'
     );
 
-    run(() => {
-      object.set('acceptTerms', false);
-    });
+    object.acceptTerms = false;
 
     assert.false(
       object.validations.attrs.acceptTerms.isValid,
