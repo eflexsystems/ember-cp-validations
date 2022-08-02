@@ -1,4 +1,4 @@
-import { A as emberArray, makeArray, isArray } from '@ember/array';
+import { makeArray, isArray } from '@ember/array';
 import { isEmpty, isNone } from '@ember/utils';
 import { getOwner } from '@ember/application';
 import ValidationResult from '../-private/result';
@@ -181,9 +181,12 @@ function createValidationsClass(inheritedValidationsClass, validations) {
       validationRules,
       inheritedValidations._validationRules
     );
-    validatableAttributes = emberArray(
-      inheritedValidations.validatableAttributes.concat(validatableAttributes)
-    ).uniq();
+
+    validatableAttributes = [
+      ...new Set(
+        inheritedValidations.validatableAttributes.concat(validatableAttributes)
+      ),
+    ];
   }
 
   Object.keys(validations).forEach((key) => {

@@ -77,11 +77,13 @@ module('Integration | Validations | Model Relationships', function (hooks) {
 
     assert.deepEqual(model, user, 'expected model to be the correct model');
     assert.deepEqual(
-      validations.content.mapBy('attribute').sort(),
+      validations.content.map((item) => item.attribute).sort(),
       ['friend'].sort()
     );
 
-    let friend = validations.content.findBy('attribute', 'friend');
+    let friend = validations.content.find(
+      (item) => item.attribute === 'friend'
+    );
 
     assert.false(friend.isValid);
     assert.deepEqual(friend.message, 'lastName should be present');
@@ -102,11 +104,13 @@ module('Integration | Validations | Model Relationships', function (hooks) {
 
     assert.deepEqual(model, user, 'expected model to be the correct model');
     assert.deepEqual(
-      validations.content.mapBy('attribute').sort(),
+      validations.content.map((item) => item.attribute).sort(),
       ['friends'].sort()
     );
 
-    let friends = validations.content.findBy('attribute', 'friends');
+    let friends = validations.content.find(
+      (item) => item.attribute === 'friends'
+    );
 
     assert.false(friends.isValid);
     assert.deepEqual(friends.message, 'lastName should be present');

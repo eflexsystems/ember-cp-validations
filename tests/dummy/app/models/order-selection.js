@@ -8,7 +8,6 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
   quantity: {
     description: 'Quantity',
     validators: [
-      validator('ds-error'),
       validator('number', {
         gte: 1,
       }),
@@ -16,20 +15,15 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
   },
   order: {
     description: 'Order',
-    validators: [
-      validator('ds-error'),
-      validator('belongs-to'),
-      validator('presence', true),
-    ],
+    validators: [validator('belongs-to'), validator('presence', true)],
   },
   line: {
     description: 'Order Line',
-    validators: [validator('ds-error'), validator('presence', true)],
+    validators: [validator('presence', true)],
   },
   questions: {
     description: 'Order Selection Questions',
     validators: [
-      validator('ds-error'),
       validator('has-many'),
       validator('length', {
         min: 1,

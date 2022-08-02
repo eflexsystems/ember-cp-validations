@@ -1,5 +1,4 @@
 import ResultCollection from './result-collection';
-import { A as emberArray } from '@ember/array';
 
 export default class WarningResultCollection extends ResultCollection {
   get isValid() {
@@ -15,20 +14,22 @@ export default class WarningResultCollection extends ResultCollection {
   }
 
   get warningMessages() {
-    return emberArray([
-      this.content.mapBy('messages'),
-      this.content.mapBy('warningMessages'),
-    ])
+    const messages = [
+      this.content.map((item) => item.messages),
+      this.content.map((item) => item.warningMessages),
+    ]
       .flat(Infinity)
-      .compact()
-      .uniq();
+      .filter((item) => item);
+
+    return [...new Set(messages)];
   }
 
   get warnings() {
     return this._computeErrorCollection(
-      [this.content.mapBy('errors'), this.content.mapBy('warnings')].flat(
-        Infinity
-      )
+      [
+        this.content.map((item) => item.errors),
+        this.content.map((item) => item.warnings),
+      ].flat(Infinity)
     );
   }
 }
