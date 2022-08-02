@@ -1,6 +1,5 @@
 import { assert } from '@ember/debug';
 import { isPresent, isEmpty, isNone } from '@ember/utils';
-import { A as emberArray } from '@ember/array';
 import Base from '@eflexsystems/ember-tracked-validations/validators/base';
 
 /**
@@ -46,7 +45,7 @@ export default class ValidatorsDependent extends Base {
       return true;
     }
 
-    let dependentValidations = (options.on ?? emberArray()).map(
+    let dependentValidations = (options.on ?? []).map(
       (dependent) => model.validations.attrs[dependent]
     );
 

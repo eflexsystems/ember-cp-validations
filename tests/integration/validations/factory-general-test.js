@@ -1,4 +1,4 @@
-import { A, isArray } from '@ember/array';
+import { isArray } from '@ember/array';
 import { isNone } from '@ember/utils';
 import { run } from '@ember/runloop';
 import DefaultMessages from 'dummy/validators/messages';
@@ -270,7 +270,7 @@ module('Integration | Validations | Factory - General', function (hooks) {
       firstName: '',
     });
 
-    let rules = A(object.validations._validationRules.firstName);
+    const rules = object.validations._validationRules.firstName;
     assert.false(rules.some((rule) => rule.defaultOptions === undefined));
     assert.deepEqual(rules[0].defaultOptions.description, 'Test field');
   });
@@ -296,7 +296,7 @@ module('Integration | Validations | Factory - General', function (hooks) {
     const object = new ObjClass(this.owner, { firstName: '' });
 
     // Global options present in rules
-    let rules = A(object.validations._validationRules.firstName);
+    const rules = object.validations._validationRules.firstName;
     assert.false(rules.some((rule) => rule.globalOptions === undefined));
     assert.deepEqual(rules[0].globalOptions.max, 10);
 
@@ -940,7 +940,7 @@ module('Integration | Validations | Factory - General', function (hooks) {
       }
     }
 
-    let items = A([]);
+    const items = [];
     for (let i = 0; i < 50; i++) {
       items.push(
         new ObjClass(this.owner, {
