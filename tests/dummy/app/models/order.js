@@ -7,11 +7,15 @@ import Model, { attr, hasMany } from '@ember-data/model';
 @buildValidations({
   source: {
     description: 'Order Source',
-    validators: [validator('presence', true)],
+    validators: [validator('ds-error'), validator('presence', true)],
   },
   lines: {
     description: 'Order Lines',
-    validators: [validator('has-many'), validator('presence', true)],
+    validators: [
+      validator('ds-error'),
+      validator('has-many'),
+      validator('presence', true),
+    ],
   },
 })
 export default class Order extends Model {
