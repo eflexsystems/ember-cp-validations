@@ -20,5 +20,5 @@ import Model, { attr, hasMany } from '@ember-data/model';
 })
 export default class Order extends Model {
   @attr('string') source;
-  @hasMany('order-line', { async: false }) lines;
+  @hasMany('order-line', { async: false, inverse: 'order' }) lines;
 }

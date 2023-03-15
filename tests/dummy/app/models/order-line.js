@@ -23,7 +23,7 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
   },
 })
 export default class OrderLine extends Model {
-  @belongsTo('order', { async: false }) order;
-  @hasMany('order-selection', { async: false }) selection;
+  @belongsTo('order', { async: false, inverse: 'lines' }) order;
+  @hasMany('order-selection', { async: false, inverse: 'line' }) selection;
   @attr('string') type;
 }
