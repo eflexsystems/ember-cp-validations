@@ -1,7 +1,6 @@
 /* eslint-env node */
 
-var execSync = require('child_process').execSync;
-// eslint-disable-next-line node/no-unpublished-require
+const execSync = require('child_process').execSync;
 
 module.exports = {
   publish: true,
@@ -18,7 +17,7 @@ function runCommand(command) {
   // eslint-disable-next-line no-console
   console.log('running: ' + command);
 
-  var output = execSync(command, { encoding: 'utf8' });
+  const output = execSync(command, { encoding: 'utf8' });
 
   // eslint-disable-next-line no-console
   console.log(output);

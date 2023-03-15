@@ -20,6 +20,7 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 })
 export default class OrderSelectionQuestion extends Model {
   @belongsTo('order', { async: false, inverse: null }) order;
-  @belongsTo('order-selection', { async: false, inverse: 'questions' }) selection;
+  @belongsTo('order-selection', { async: false, inverse: 'questions' })
+  selection;
   @attr('string') text;
 }
