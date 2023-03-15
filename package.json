@@ -16,7 +16,7 @@
     "test:ember-compatibility": "ember try:each"
   },
   "engines": {
-    "node": "14.* || >= 16"
+    "node": ">= 16"
   },
   "dependencies": {
     "ember-cli-babel": "^7.26.11",
