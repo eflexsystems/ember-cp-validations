@@ -1,6 +1,6 @@
 {
   "name": "@eflexsystems/ember-tracked-validations",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "description": "Ember computed property based validation library",
   "scripts": {
     "build": "ember build --environment=production",
@@ -19,7 +19,8 @@
     "node": ">= 16"
   },
   "dependencies": {
-    "ember-cli-babel": "^7.26.11",
+    "@babel/core": "^7.22.10",
+    "ember-cli-babel": "^8.0.0",
     "ember-cli-htmlbars": "^6.2.0",
     "ember-validators": "^4.1.2"
   },
@@ -75,9 +76,7 @@
     "yuidoc-ember-theme": "^2.0.1"
   },
   "peerDependencies": {
-    "@glimmer/component": "^1.1.2",
-    "@glimmer/tracking": "^1.1.2",
-    "ember-source": "^4.5.0"
+    "ember-source": ">= 4.0.0"
   },
   "keywords": [
     "ember-addon",
